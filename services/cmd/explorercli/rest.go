@@ -20,6 +20,7 @@ import (
 
 	_ "github.com/cybermiles/explorer/services/modules/stake"
 	services "github.com/cybermiles/explorer/services/handlers"
+	"github.com/kidinamoto01/explorer/config"
 )
 
 var (
@@ -36,7 +37,10 @@ var (
 
 func prepareRestServerCommands() {
 	commands.AddBasicFlags(restServerCmd)
-	restServerCmd.PersistentFlags().IntP(flagPort, "p", 8998, "port to run the server on")
+
+	config.LoadConfiguration("./services/config.yml")
+
+	restServerCmd.PersistentFlags().IntP(flagPort, "p", config.Config.Port, "port to run the server on")
 }
 
 func AddV1Routes(r *mux.Router) {
