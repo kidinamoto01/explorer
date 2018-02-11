@@ -6,6 +6,10 @@ import (
   sdk "github.com/cosmos/cosmos-sdk"
   "github.com/cosmos/cosmos-sdk/modules/coin"
   crypto "github.com/tendermint/go-crypto"
+  "github.com/spf13/cast"
+  "github.com/cosmos/cosmos-sdk/client/commands"
+  "github.com/tendermint/tmlibs/common"
+
 )
 
 const stakingModuleName = "stake"
@@ -63,6 +67,32 @@ func (tx BondUpdate) ValidateBasic() error {
   if !coins.IsPositive() {
     return fmt.Errorf("Amount must be > 0")
   }
+
+  c := commands.GetNode()
+
+  status, err := c.Status()
+
+  height := status.LatestBlockHeight
+
+  height64 := cast.ToInt64(height)
+
+  block, err := c.Validators(&height64)
+  if err != nil {
+    return nil
+  }
+
+  //loop validators
+  sum := int64(0)
+  for i:= 0; i < len(block.Validators);i++{
+    fmt.Println(block.Validators[i])
+    sum += block.Validators[i].VotingPower
+    fmt.Println(sum)
+  }
+
+  if tx.Bond.Amount*3 > sum {
+    return fmt.Errorf("Amount must be less than 1/3")
+  }
+
   return nil
 }
 
