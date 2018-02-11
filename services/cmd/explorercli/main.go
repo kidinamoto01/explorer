@@ -8,8 +8,8 @@ import (
 	"github.com/tendermint/tmlibs/cli"
 
 	"github.com/cosmos/cosmos-sdk/client/commands"
-	"github.com/cybermiles/explorer/services/version"
-	"github.com/cybermiles/explorer/services/modules/sync"
+	"github.com/kidinamoto01/explorer/services/version"
+	"github.com/kidinamoto01/explorer/services/modules/sync"
 )
 
 // entry point for this binary
@@ -39,7 +39,7 @@ func main() {
 		commands.InitCmd,
 		restServerCmd,
 		syncCmd,
-		
+		commands.ResetCmd,
 		version.VersionCmd,
 	)
 
