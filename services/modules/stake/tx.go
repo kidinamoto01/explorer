@@ -8,8 +8,6 @@ import (
   crypto "github.com/tendermint/go-crypto"
   "github.com/spf13/cast"
   "github.com/cosmos/cosmos-sdk/client/commands"
-  "github.com/tendermint/tmlibs/common"
-
 )
 
 const stakingModuleName = "stake"
